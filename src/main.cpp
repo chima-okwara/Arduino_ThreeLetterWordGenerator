@@ -27,7 +27,7 @@ void setup()
 {
 ///////*************BEGINNING OF SETUP ROUTINE*******************////////////////////////////////
     //Prepares the serial monitor and the lcd screen
-    Serial.begin(9600);
+    // Serial.begin(9600);
     lcd.begin(16, 2);
     lcd.clear();
 
@@ -58,9 +58,9 @@ void loop()
   // Serial.print("Word: ");
 
   // randomSeed(random());   //Seed for Random number Generator
-  // lcd.clear();
-  // lcd.setCursor(0,0);
-  // lcd.print("Word: ");
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Word: ");
 
   delay(1000);
 
@@ -75,21 +75,21 @@ void loop()
   Word[2]=thirdLetter;
 
 
-  // lcd.print(Word);
-  // lcd.setCursor(0,0);
-  Serial.print("Word: ");
   lcd.setCursor(6,0);
-  Serial.println(Word);
+  lcd.print(Word);
+  // Serial.print("Word: ");
+  // lcd.setCursor(0,0);
+  // Serial.println(Word);
   delay(1000);
   lcd.setCursor(0,1);
   lcd.print("Word exists?");
-  Serial.println("Word exists?");
+  // Serial.println("Word exists?");
   delay(1000);
 
   confirm();
   delay(1000);
 
-  Serial.println("Continue?");
+  // Serial.println("Continue?");
   redo=Serial.readString();
   delay(1000);
 
@@ -100,8 +100,8 @@ void loop()
     lcd.print("Correct Words:");
     lcd.setCursor(0, 1);
     lcd.print(count);
-    Serial.print("Total number of correct Words: ");
-    Serial.println(count);
+    // Serial.print("Total number of correct Words: ");
+    // Serial.println(count);
     // break;
   }
 

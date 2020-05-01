@@ -31,8 +31,8 @@ inline void confirm()                       //Function to confirm if Word exists
   if (confirmation=="y"||confirmation=="Y")
   {
     lcd.setCursor(13,1);
-    lcd.print("yes");
-    Serial.println("yes");
+    // lcd.print("yes");
+    // Serial.println("yes");
     count++;
   }
 
@@ -41,10 +41,15 @@ inline void confirm()                       //Function to confirm if Word exists
   {    // lcd.print("no");
     lcd.setCursor(13,1);
     lcd.print("no");
-    Serial.println("no");
+    // Serial.println("no");
   }
 
   else
-    Serial.println("No valid response");
+
+  {
+    // Serial.println("No valid response");
+    lcd.setCursor (0,1);
+    lcd.print("Invalid Response");
+  }
 
 }
