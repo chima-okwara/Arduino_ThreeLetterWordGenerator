@@ -15,11 +15,6 @@
 #include <string.h>
 #include "functions.h"
 
-// extern int count;                                          //To count the number of correct Words.
-//
-//
-// extern char Word[4];                                             //Three letter Word generated.
-// extern char alphabets[];                                          //Alphabets to choose from
 
 
 void setup()
@@ -53,14 +48,10 @@ void loop()
 {
   lcd.clear();
 
-  lcd.print(Word);
-  lcd.setCursor(0,0);
-  // Serial.print("Word: ");
-
-  // randomSeed(random());   //Seed for Random number Generator
-  lcd.clear();
   lcd.setCursor(0,0);
   lcd.print("Word: ");
+  lcd.setCursor(6,0);
+  lcd.print(Word);
 
   delay(1000);
 

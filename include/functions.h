@@ -17,9 +17,8 @@ inline char generateLetter()          //Function to generate a random character
 {
   time_t sec;
   time(&sec);
-  long secc = (long) sec;
-    randomSeed(secc);
-    return alphabets[(random()%26+1)-1];      //Generate a random number between 0 and 25
+    randomSeed(sec);
+    return alphabets[random()%25];      //Generate a random number between 0 and 25
                                               //since the elements in alphabets[] are labelled 0 to 25
 }
 
