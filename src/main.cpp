@@ -15,8 +15,6 @@
 #include <string.h>
 #include "functions.h"
 
-
-
 void setup()
 
 {
