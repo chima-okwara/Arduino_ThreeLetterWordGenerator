@@ -29,6 +29,7 @@ An arduino project to generate random three-letter words and display them on a 1
 Arduino_ThreeLetterWordGenerator:
 
 /include/functions.h        **This contains the header file with all function definitions.**
+
 /src/main.cpp               **This contains the main source file with the setup() and loop() Arduino functions**
 
 
