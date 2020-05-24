@@ -44,15 +44,6 @@ void setup()
 
 void loop()
 {
-  lcd.clear();
-
-  lcd.setCursor(0,0);
-  lcd.print("Word: ");
-  lcd.setCursor(6,0);
-  lcd.print(Word);
-
-  delay(1000);
-
 //Generate three random letters
   firstLetter=generateLetter();
   secondLetter=generateLetter();
@@ -63,6 +54,12 @@ void loop()
   Word[1]=secondLetter;
   Word[2]=thirdLetter;
 
+  lcd.clear();
+
+  delay(200);
+
+  lcd.setCursor(0,0);
+  lcd.print("Word: ");
 
   lcd.setCursor(6,0);
   lcd.print(Word);
