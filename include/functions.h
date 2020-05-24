@@ -19,7 +19,7 @@ inline char generateLetter()          //Function to generate a random character
   time(&sec);
     randomSeed(sec);
     return alphabets[random()%25];      //Generate a random number between 0 and 25
-                                              //since the elements in alphabets[] are labelled 0 to 25
+                                        //since the elements in alphabets[] are labelled 0 to 25
 }
 
 
@@ -30,9 +30,10 @@ inline void confirm()                       //Function to confirm if Word exists
   if (confirmation=="y"||confirmation=="Y")
   {
     lcd.setCursor(13,1);
-    // lcd.print("yes");
+    lcd.print("yes");
+    lcd.clear();
     // Serial.println("yes");
-    count++;
+    count++;      //Add word to count of correct words.
   }
 
   else
@@ -40,6 +41,7 @@ inline void confirm()                       //Function to confirm if Word exists
   {    // lcd.print("no");
     lcd.setCursor(13,1);
     lcd.print("no");
+    lcd.clear();
     // Serial.println("no");
   }
 
@@ -49,6 +51,7 @@ inline void confirm()                       //Function to confirm if Word exists
     // Serial.println("No valid response");
     lcd.setCursor (0,1);
     lcd.print("Invalid Response");
+    lcd.clear();
   }
 
 }
