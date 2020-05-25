@@ -9,8 +9,8 @@ LiquidCrystal lcd (14,15,16,17,18,19);                      //pins for the lcd s
 String confirmation, redo;                                //To get feedback from user
 char firstLetter, secondLetter, thirdLetter;              //the three letters of the Word
 char Word[4];                                             //Three letter Word generated.
-char alphabets[] = {"aeiouybcdfghjklmnpqrstvwxz"},        //Alphabets to choose from
-     vowels[] = {"aeiouy"},                               //Vowels.
+char alphabets[] = {"abcdefghijklmnopqrstuvwxyz"},        //Alphabets to choose from
+     vowels[] = {"aeiouy"},                               //Vowels to check for.
      *vowelCheck;                                         //To check if vowels exist in Word[].
 
 int count (0);

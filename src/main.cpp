@@ -3,8 +3,7 @@
 ///Copyright (c) 03 Apr., 2020; Eichen(R) Technologies*****************************************
 ///Tested on Arduino Uno. Written using PlatformIO*********************************************
 ///All rights reserved*************************************************************************
-///Modifications to be done:      **************************************************///////////
-///*Improve the code so  that at least one of the letters must always be a vowel**************
+///All functions and variable declarations located in /include/functions.h********************
 ///*******************************************************************************************
 //////////////////////////////////////////////////////////////////////////////////////////////
 
