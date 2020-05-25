@@ -1,6 +1,6 @@
 ///************ Arduino-based three-letter Word generator*****************************/////////
 ///Written by Chimaroke R. Okwara (AlphaChi)***************************************************
-///Copyright (c) 03 Apr., 2020; Eichen(R) Technologies*****************************************
+///Copyright (c) 03 Apr., 2020; The Eichen Group(R)********************************************
 ///Tested on Arduino Uno. Written using PlatformIO*********************************************
 ///All rights reserved*************************************************************************
 ///All functions and variable declarations located in /include/functions.h********************
