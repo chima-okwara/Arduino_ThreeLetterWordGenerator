@@ -44,6 +44,7 @@ void setup()
 
 void loop()
 {
+    generate:
 //Generate three random letters
   firstLetter=generateLetter();
   secondLetter=generateLetter();
@@ -53,6 +54,17 @@ void loop()
   Word[0]=firstLetter;
   Word[1]=secondLetter;
   Word[2]=thirdLetter;
+
+  vowelCheck=strpbrk(Word, vowels);         //According to tutorial, should be *vowelCheck[]
+
+  while (vowelCheck==NULL)                  //To ensure that at least one word is a vowel.
+  {
+      goto generate;
+      if (vowelCheck!=NULL)
+        break;
+  }
+  //Edit above code later. Find way to eliminate goto statement.
+  //PS:as at Monday, 25 May 2020 03:04, the above while loop was untested.
 
   lcd.clear();
 
