@@ -65,6 +65,7 @@ void loop()
   //Edit above code later. Find way to eliminate goto statement.
   //PS:as at Monday, 25 May 2020 03:04, the above while loop was untested.
 
+
   lcd.clear();
 
   delay(200);
