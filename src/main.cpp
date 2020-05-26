@@ -55,6 +55,8 @@ void loop()
   Word[2]=thirdLetter;
 
   vowelCheck=strpbrk(Word, vowels);         //According to tutorial, should be *vowelCheck[]
+                                            //Make sure to check later.
+                                            
 
   while (vowelCheck==NULL)                  //To ensure that at least one word is a vowel.
   {
