@@ -14,7 +14,10 @@
 #include <string.h>
 #include "functions.h"
 
+
+
 void setup()
+
 
 {
 ///////*************BEGINNING OF SETUP ROUTINE*******************////////////////////////////////
@@ -31,7 +34,7 @@ void setup()
     lcd.print("Three Letter Word Generator");
     delay(500);
 
-    for (int i (0); i<11; ++i)  //To scroll the second part of the welcome message.
+    for (size_t i {0}; i<11; ++i)  //To scroll the second part of the welcome message.
     {
       lcd.scrollDisplayLeft();
       delay(500);
@@ -54,16 +57,14 @@ void loop()
   Word[1]=secondLetter;
   Word[2]=thirdLetter;
 
-  vowelCheck=strpbrk(Word, vowels);         //According to tutorial, should be *vowelCheck[]
-                                            //Make sure to check later.
-                                            
+  vowelCheck=strpbrk(Word, vowels);
 
-  while (vowelCheck==NULL)                  //To ensure that at least one word is a vowel.
-  {
-      goto generate;
-      if (vowelCheck!=NULL)
-        break;
-  }
+
+  if (vowelCheck==NULL)                  //To ensure that at least one word is a vowel.
+    goto generate;
+
+  if (vowelCheck!=NULL);
+
   //Edit above code later. Find way to eliminate goto statement.
   //PS:as at Monday, 25 May 2020 03:04, the above while loop was untested.
 
