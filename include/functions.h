@@ -1,60 +1,49 @@
+/****   File: /include/functons.h                                       **************
+*****   Description: Contains definitions of functions for project      **************
+*****                                                                   *************/
+
+#ifndef __FUNCTION__H__
+#define __FUNCTION__H__
+
 #include <Arduino.h>
-#include <time.h>
 #include <LiquidCrystal.h>
 #include <Wire.h>
 #include <string.h>
 
+#define DELAY(x) _delay_ms(x)
+
+typedef unsigned char uchar;
+
 LiquidCrystal lcd (14,15,16,17,18,19);                      //pins for the lcd screen
 
-String confirmation, redo;                                //To get feedback from user
-char firstLetter, secondLetter, thirdLetter;              //the three letters of the Word
-char Word[4];                                             //Three letter Word generated.
-char alphabets[] = {"abcdefghijklmnopqrstuvwxyz"},        //Alphabets to choose from
-     vowels[] = {"aeiouy"},                               //Vowels to check for.
-     *vowelCheck;                                         //To check if vowels exist in Word[].
+//  VARIABLES:
 
-int count (0);
+char alphabets[] = { "abcdefghijklmnopqrstuvwxyz" },          //Alphabets to choose from
+     vowels[] = {"aeiou" },                                   //List of vowels
+     *vowelCheck = NULL;
+
+short count (0);                                              //To count number of correct words.
 
 
-inline char generateLetter()          //Function to generate a random character
+//  METHODS:
+inline uchar generateLetter(short& random)                  //To generate a random letter.
 {
-  time_t sec;
-  time(&sec);
-    randomSeed(sec);
-    return alphabets[random()%25];      //Generate a random number between 0 and 25
-                                        //since the elements in alphabets[] are labelled 0 to 25
+    return alphabets[random];
+}
+
+inline bool confirm (String &confirm)                        //To check if the letter exists.
+{
+    if (confirm == "y" || confirm == "Y")
+        return (true);
+    else
+        return (false);
+}
+
+short getRandom()                                           //To generate a random number.
+{
+    randomSeed(2000);
+    return ( static_cast <short> (random()%25) );
 }
 
 
-inline void confirm()                       //Function to confirm if Word exists
-{
-  confirmation=Serial.readString();         //Reads a string from the serial monitor
-
-  if (confirmation=="y"||confirmation=="Y")
-  {
-    lcd.setCursor(13,1);
-    lcd.print("yes");
-    lcd.clear();
-    // Serial.println("yes");
-    count++;      //Add word to count of correct words.
-  }
-
-  else
-  if (confirmation=="n"||confirmation=="N")
-  {    // lcd.print("no");
-    lcd.setCursor(13,1);
-    lcd.print("no");
-    lcd.clear();
-    // Serial.println("no");
-  }
-
-  else
-
-  {
-    // Serial.println("No valid response");
-    lcd.setCursor (0,1);
-    lcd.print("Invalid Response");
-    lcd.clear();
-  }
-
-}
+#endif

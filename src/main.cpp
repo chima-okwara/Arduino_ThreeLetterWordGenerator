@@ -1,110 +1,144 @@
 ///************ Arduino-based three-letter Word generator*****************************/////////
-///Written by Chimaroke R. Okwara (AlphaChi)***************************************************
-///Copyright (c) 03 Apr., 2020; The Eichen Group(R)********************************************
-///Tested on Arduino Uno. Written using PlatformIO*********************************************
-///All rights reserved*************************************************************************
-///All functions and variable declarations located in /include/functions.h********************
+///Written by Chimaroke R. Okwara (AlphaChi)**************************************************
+///Copyright (c) 03 Apr., 2020; The Eichen Group(TM)******************************************
+///Tested on Arduino Uno. Written using PlatformIO********************************************
+///All rights reserved************************************************************************
+///All methods used are defined in /include/functions.h***************************************
 ///*******************************************************************************************
-//////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <Arduino.h>
-#include <time.h>
-#include <LiquidCrystal.h>
-#include <Wire.h>
-#include <string.h>
 #include "functions.h"
 
+String confirmation{},                                   //To confirm that word exists
+       redo{"y"};                                        //To continue generating words.
+       // firstLetter{}, secondLetter{}, thirdLetter{};     //The three letters of the word.
+char Word[4] {};                                        //To hold the three-letter word.
 
-
-void setup()
-
-
+int main()
 {
-///////*************BEGINNING OF SETUP ROUTINE*******************////////////////////////////////
-    //Prepares the serial monitor and the lcd screen
-    // Serial.begin(9600);
-    lcd.begin(16, 2);
-    lcd.clear();
+    ///////*************BEGINNING OF SETUP ROUTINE*******************///////
+        //Prepares the serial monitor and the lcd screen
 
-    //print welcome message onto the lcd screen:
-    lcd.setCursor(3, 0);
-    lcd.print("Eichen(R)");
-    delay(1000);
-    lcd.setCursor(0, 1);
-    lcd.print("Three Letter Word Generator");
-    delay(500);
+        Serial.begin(9600);
+        lcd.begin(16, 2);
+        lcd.clear();
 
-    for (size_t i {0}; i<11; ++i)  //To scroll the second part of the welcome message.
+        //print welcome message onto the lcd screen:
+        lcd.setCursor(3, 0);
+        lcd.print("Eichen(R)");
+        DELAY(1000);
+        lcd.setCursor(0, 1);
+        lcd.print("Three Letter Word Generator");
+        DELAY(500);
+
+        for (size_t i {0}; i<11; ++i)  //To scroll the second part of the welcome message.
+        {
+          lcd.scrollDisplayLeft();
+          DELAY(500);
+        }
+
+        lcd.clear();
+
+    /////////////////****************END OF SETUP ROUTINE****************///////
+
+    while(1)
     {
-      lcd.scrollDisplayLeft();
-      delay(500);
+        DELAY(200);
+        lcd.setCursor(0, 0);
+        lcd.print("Word: ");
+
+        wordGeneration:
+
+            for (size_t i{}; i<4; ++i)          //Loop to generate the three letters of the word.
+            {
+                short random = getRandom();
+                Word[i] = generateLetter(random);
+                DELAY(100);
+            }
+
+            Word[4] = '\0';
+
+            vowelCheck = strpbrk (Word, vowels);    //Check Word for vowels.
+
+            if (vowelCheck == NULL)              //If there are no vowels, regenerate words.
+            goto wordGeneration;
+            else;
+
+
+        //To print the word Generated:
+        lcd.setCursor(6, 0);
+        lcd.print(Word);
+        Serial.println(Word);
+
+
+        //To confirm whether the generated word exists.
+        DELAY(500);
+        lcd.setCursor(1,0);
+        lcd.print("Word Exists? Y/N");
+        Serial.println("Word Exists? Y/N");
+
+        DELAY(1000);
+        confirmation=Serial.readString();
+        if (confirm(confirmation))      //If the generated word exists...
+        {
+            ++count;                    //...add it to the count of corrected words...
+            lcd.setCursor(13, 1);       //...and print "Yes" to the LCD...
+            lcd.print("Yes");
+            lcd.clear();
+            Serial.println("Yes");      //...and the Serial monitor.
+        }
+
+        else                            //If the word doesn't exist...
+        {
+            lcd.setCursor(13, 1);       //...print "No" to the LCD...
+            lcd.print("No");
+            lcd.clear();
+            Serial.println("No");       //...and the serial monitor.
+        }
+
+        DELAY(500);
+
+
+        //Whether to continue generating words or not:
+        lcd.clear();
+        lcd.setCursor(0, 0);
+        lcd.print("Continue? Y/N");
+        Serial.print("Continue? Y/N");
+
+        DELAY(500);
+        redo=Serial.readString();
+
+
+        if ((redo == "n") || (redo == "N"))    //If user wants to stop generating words...
+        {
+            lcd.setCursor(0,1);
+            lcd.print("No");
+            DELAY(500);
+            lcd.clear();
+            lcd.setCursor(0, 0);
+            lcd.print("Correct words: ");     //...print the total number of correct words to the LCD...
+            lcd.setCursor(0, 1);
+            lcd.print(count);
+            Serial.print("Total number of correct words: ");
+            Serial.print(count);              //...and serial monitor.
+            count=0;
+            // Serial.readString();        //*************To pause the game until enter is pressed
+            break;
+        }
+
+        else if ((redo == "y") || (redo == "Y"))
+        {
+            lcd.setCursor(0,1);
+            lcd.print("Yes");
+            Serial.println("Yes");
+            DELAY(500);
+        }
+
+        else
+        {
+            lcd.setCursor(0,1);
+            lcd.print("Invalid input");
+            Serial.println("Invalid input");
+        }
     }
-
-    lcd.clear();
-/////////////////****************END OF SETUP ROUTINE****************////////////////////////////
-}
-
-void loop()
-{
-    generate:
-//Generate three random letters
-  firstLetter=generateLetter();
-  secondLetter=generateLetter();
-  thirdLetter=generateLetter();
-
-//Assign the random letters to the Word
-  Word[0]=firstLetter;
-  Word[1]=secondLetter;
-  Word[2]=thirdLetter;
-
-  vowelCheck=strpbrk(Word, vowels);
-
-
-  if (vowelCheck==NULL)                  //To ensure that at least one word is a vowel.
-    goto generate;
-
-  if (vowelCheck!=NULL);
-
-  //Edit above code later. Find way to eliminate goto statement.
-  //PS:as at Monday, 25 May 2020 03:04, the above while loop was untested.
-
-
-  lcd.clear();
-
-  delay(200);
-
-  lcd.setCursor(0,0);
-  lcd.print("Word: ");
-
-  lcd.setCursor(6,0);
-  lcd.print(Word);
-  // Serial.print("Word: ");
-  // lcd.setCursor(0,0);
-  // Serial.println(Word);
-  delay(1000);
-  lcd.setCursor(0,1);
-  lcd.print("Word exists?");
-  // Serial.println("Word exists?");
-  delay(1000);
-
-  confirm();
-  delay(1000);
-
-  // Serial.println("Continue?");
-  redo=Serial.readString();
-  delay(1000);
-
-  if (redo=="n"||redo=="N")
-  {
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("Correct Words:");
-    lcd.setCursor(0, 1);
-    lcd.print(count);
-    // Serial.print("Total number of correct Words: ");
-    // Serial.println(count);
-    // break;
-  }
-
-  else;
 }
