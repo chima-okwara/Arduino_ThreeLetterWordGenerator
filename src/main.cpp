@@ -7,37 +7,40 @@
 ///*******************************************************************************************
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
+#include <Arduino.h>
 #include "functions.h"
 
 String confirmation{},                                   //To confirm that word exists
        redo{"y"};                                        //To continue generating words.
-       // firstLetter{}, secondLetter{}, thirdLetter{};     //The three letters of the word.
-char Word[4] {};                                        //To hold the three-letter word.
+
+char Word[4];                                        //To hold the three-letter word.
 
 int main()
 {
     ///////*************BEGINNING OF SETUP ROUTINE*******************///////
         //Prepares the serial monitor and the lcd screen
 
-        Serial.begin(9600);
-        lcd.begin(16, 2);
-        lcd.clear();
+    Serial.begin(9600);
+    lcd.begin(16, 2);
+    lcd.clear();
+    randomSeed(20000L);
 
-        //print welcome message onto the lcd screen:
-        lcd.setCursor(3, 0);
-        lcd.print("Eichen(R)");
-        DELAY(1000);
-        lcd.setCursor(0, 1);
-        lcd.print("Three Letter Word Generator");
-        DELAY(500);
+    //print welcome message onto the lcd screen:
+    lcd.setCursor(0, 0);
+    lcd.print("***Eichen (R)***");
+    DELAY(1000);
+    lcd.setCursor(0, 1);
+    lcd.print("Three Letter Word Generator");
+    DELAY(500);
 
-        for (size_t i {0}; i<11; ++i)  //To scroll the second part of the welcome message.
-        {
-          lcd.scrollDisplayLeft();
-          DELAY(500);
-        }
+    for (size_t i=0; i<11; ++i)  //To scroll the second part of the welcome message.
+    {
+      lcd.scrollDisplayLeft();
+      DELAY(500);
+    }
 
-        lcd.clear();
+    lcd.clear();
+
 
     /////////////////****************END OF SETUP ROUTINE****************///////
 
@@ -47,22 +50,18 @@ int main()
         lcd.setCursor(0, 0);
         lcd.print("Word: ");
 
-        wordGeneration:
+       do                                 //Generate new letters until at least one is a vowel
+        {
+          for (uint8_t i{}; i<3; ++i)          //Loop to generate the three letters of the word.
+          {
+              uint8_t random = getRandom();
+              Word[i] = generateLetter(random);
+              DELAY(100);
+          }
 
-            for (size_t i{}; i<4; ++i)          //Loop to generate the three letters of the word.
-            {
-                short random = getRandom();
-                Word[i] = generateLetter(random);
-                DELAY(100);
-            }
+          Word[3] = '\0';
 
-            Word[4] = '\0';
-
-            vowelCheck = strpbrk (Word, vowels);    //Check Word for vowels.
-
-            if (vowelCheck == NULL)              //If there are no vowels, regenerate words.
-            goto wordGeneration;
-            else;
+        }  while (!checkVowel(Word, vowels));
 
 
         //To print the word Generated:

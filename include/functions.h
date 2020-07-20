@@ -9,10 +9,9 @@
 #include <LiquidCrystal.h>
 #include <Wire.h>
 #include <string.h>
+#include <avr/io.h>
 
-#define DELAY(x) _delay_ms(x)
-
-typedef unsigned char uchar;
+#define DELAY(x) _delay_ms(x)                               //Macro for delay function
 
 LiquidCrystal lcd (14,15,16,17,18,19);                      //pins for the lcd screen
 
@@ -22,27 +21,55 @@ char alphabets[] = { "abcdefghijklmnopqrstuvwxyz" },          //Alphabets to cho
      vowels[] = {"aeiou" },                                   //List of vowels
      *vowelCheck = NULL;
 
-short count (0);                                              //To count number of correct words.
+uint8_t count (0);                                              //To count number of correct words.
 
 
 //  METHODS:
-inline uchar generateLetter(short& random)                  //To generate a random letter.
+inline char generateLetter(uint8_t &random)                  //To generate a random letter.
 {
-    return alphabets[random];
+  return alphabets[random];
 }
 
 inline bool confirm (String &confirm)                        //To check if the letter exists.
 {
-    if (confirm == "y" || confirm == "Y")
-        return (true);
-    else
-        return (false);
+  if (confirm == "y" || confirm == "Y")
+      return (true);
+  else
+      return (false);
 }
 
-short getRandom()                                           //To generate a random number.
+
+bool  checkVowel(char * str, char * attributes)              //Checks str for attributes:
 {
-    randomSeed(2000);
-    return ( static_cast <short> (random()%25) );
+  bool  position=false;
+  while ((*attributes)!='\0')
+  {
+    while ((*str)!='\0')
+    {
+      if ((*str)==(*attributes))
+      {
+        position=true;
+        break;
+      }
+
+      else
+        ++str;
+    }
+
+    if (position==false)
+      break;
+    else
+      ++attributes;
+  }
+
+  return (position);
+}
+
+
+uint8_t getRandom()                                           //To generate a random number.
+{
+  static uint8_t number = uint8_t (random()%25);
+  return (number);
 }
 
 
