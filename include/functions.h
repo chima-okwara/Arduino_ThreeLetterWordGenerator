@@ -11,11 +11,11 @@
 
 //  VARIABLES:
 
-extern char alphabets[],          //Alphabets to choose from
-     vowels[];                                   //List of vowels
+extern char alphabets[],                                //Alphabets to choose from
+            vowels[];                                   //List of vowels
 
 
-extern uint8_t count;                                              //To count number of correct words.
+extern uint8_t count;                                   //To count number of correct words.
 
 
 //  METHODS:
