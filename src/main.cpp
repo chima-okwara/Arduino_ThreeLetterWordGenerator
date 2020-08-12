@@ -14,8 +14,7 @@
 #include <Arduino.h>
 #include <LiquidCrystal.h>
 #include <Wire.h>
-// #include <string.h>
-// #include <avr/io.h>
+
 #include "functions.h"
 
 String confirmation{},                                   //To confirm that word exists
@@ -33,7 +32,7 @@ int main(void)
     Serial.begin(9600);
     lcd.begin(16, 2);
     lcd.clear();
-    randomSeed(20000L);
+    srand(20000L);
 
     //print welcome message onto the lcd screen:
     lcd.setCursor(0, 0);

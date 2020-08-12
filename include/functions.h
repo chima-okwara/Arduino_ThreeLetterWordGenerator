@@ -3,6 +3,7 @@
 *****                                                                   *************/
 
 #include <Arduino.h>
+#include <stdlib.h>
 #ifndef __FUNCTION__H__
 #define __FUNCTION__H__
 
@@ -10,11 +11,11 @@
 
 //  VARIABLES:
 
-char alphabets[] = { "abcdefghijklmnopqrstuvwxyz" },          //Alphabets to choose from
-     vowels[] = {"aeiou" };                                   //List of vowels
+extern char alphabets[],          //Alphabets to choose from
+     vowels[];                                   //List of vowels
 
 
-uint8_t count (0);                                              //To count number of correct words.
+extern uint8_t count;                                              //To count number of correct words.
 
 
 //  METHODS:

@@ -1,5 +1,11 @@
 #include "functions.h"
 
+
+char alphabets[] = { "abcdefghijklmnopqrstuvwxyz" },    //Letters
+        vowels[] = { "aeiouy" };                        //Vowels
+uint8_t count {0};                                      //Count of correct words.
+
+
 bool  checkVowel(char *str, char *attributes)        //Check if str contains attributes
 {
   bool  position=false;
@@ -27,6 +33,6 @@ bool  checkVowel(char *str, char *attributes)        //Check if str contains att
 
 uint8_t &getRandom()                                  //To generate a random number.
 {
-  static uint8_t number = uint8_t (random()%25);
+  static uint8_t number = uint8_t (rand()%25);
   return (number);
 }
