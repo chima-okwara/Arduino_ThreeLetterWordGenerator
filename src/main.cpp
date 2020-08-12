@@ -6,8 +6,16 @@
 ///All methods used are defined in /include/functions.h***************************************
 ///*******************************************************************************************
 ///////////////////////////////////////////////////////////////////////////////////////////////
+// extern "C"
+// {
+//   #include <functions.h>
+// }
 
 #include <Arduino.h>
+#include <LiquidCrystal.h>
+#include <Wire.h>
+// #include <string.h>
+// #include <avr/io.h>
 #include "functions.h"
 
 String confirmation{},                                   //To confirm that word exists
@@ -15,7 +23,9 @@ String confirmation{},                                   //To confirm that word 
 
 char Word[4];                                        //To hold the three-letter word.
 
-int main()
+LiquidCrystal lcd (14,15,16,17,18,19);                      //pins for the lcd screen
+
+int main(void)
 {
     ///////*************BEGINNING OF SETUP ROUTINE*******************///////
         //Prepares the serial monitor and the lcd screen
@@ -32,6 +42,7 @@ int main()
     lcd.setCursor(0, 1);
     lcd.print("Three Letter Word Generator");
     DELAY(500);
+    Serial.println("Done");
 
     for (size_t i=0; i<11; ++i)  //To scroll the second part of the welcome message.
     {
@@ -115,7 +126,7 @@ int main()
             DELAY(500);
             lcd.clear();
             lcd.setCursor(0, 0);
-            lcd.print("Correct words: ");     //...print the total number of correct words to the LCD...
+            lcd.print("Correct words: ");//...print the total number of correct words to the LCD...
             lcd.setCursor(0, 1);
             lcd.print(count);
             Serial.print("Total number of correct words: ");
