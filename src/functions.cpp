@@ -1,12 +1,12 @@
 #include "functions.h"
 
 
-char alphabets[] = { "abcdefghijklmnopqrstuvwxyz" },    //Letters
-        vowels[] = { "aeiouy" };                        //Vowels
-uint8_t count {0};                                      //Count of correct words.
+const char *alphabets = { "abcdefghijklmnopqrstuvwxyz" },   //Letters
+        *vowels = { "aeiouy" };                             //Vowels
+uint8_t count {0};                                          //Count of correct words.
 
 
-bool  checkVowel(char *str, char *attributes)        //Check if str contains attributes
+bool  checkVowel(const char *str, const char *attributes)   //Check if str contains attributes
 {
   bool  position=false;
   while ((*attributes)!='\0')
@@ -30,9 +30,7 @@ bool  checkVowel(char *str, char *attributes)        //Check if str contains att
   return (position);
 }
 
-
-uint8_t &getRandom()                                  //To generate a random number.
+bool isConfirm()
 {
-  static uint8_t number = uint8_t (rand()%25);
-  return (number);
+  return (::confirmation=="y" || ::confirmation=="Y" || ::confirmation=="n" || ::confirmation=="N");
 }

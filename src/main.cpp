@@ -14,7 +14,6 @@
 #include <Arduino.h>
 #include <LiquidCrystal.h>
 #include <Wire.h>
-
 #include "functions.h"
 
 String confirmation{},                                   //To confirm that word exists
@@ -24,7 +23,7 @@ char Word[4];                                        //To hold the three-letter 
 
 LiquidCrystal lcd (14,15,16,17,18,19);                      //pins for the lcd screen
 
-int main(void)
+void setup()
 {
     ///////*************BEGINNING OF SETUP ROUTINE*******************///////
         //Prepares the serial monitor and the lcd screen
@@ -32,7 +31,7 @@ int main(void)
     Serial.begin(9600);
     lcd.begin(16, 2);
     lcd.clear();
-    srand(20000L);
+    srand(2000U);
 
     //print welcome message onto the lcd screen:
     lcd.setCursor(0, 0);
@@ -53,19 +52,21 @@ int main(void)
 
 
     /////////////////****************END OF SETUP ROUTINE****************///////
+}
 
-    while(1)
-    {
+void loop()
+{
         DELAY(200);
         lcd.setCursor(0, 0);
         lcd.print("Word: ");
+        Serial.print("Word: ");
 
        do                                 //Generate new letters until at least one is a vowel
         {
           for (uint8_t i{}; i<3; ++i)          //Loop to generate the three letters of the word.
           {
-              uint8_t random = getRandom();
-              Word[i] = generateLetter(random);
+              // uint8_t random = getRandom();
+              Word[i] = alphabets[rand()%26];;
               DELAY(100);
           }
 
@@ -86,8 +87,9 @@ int main(void)
         lcd.print("Word Exists? Y/N");
         Serial.println("Word Exists? Y/N");
 
-        DELAY(1000);
-        confirmation=Serial.readString();
+
+        while(!isConfirm())
+          confirmation=Serial.readString();
         if (confirm(confirmation))      //If the generated word exists...
         {
             ++count;                    //...add it to the count of corrected words...
@@ -132,7 +134,6 @@ int main(void)
             Serial.print(count);              //...and serial monitor.
             count=0;
             // Serial.readString();        //*************To pause the game until enter is pressed
-            break;
         }
 
         else if ((redo == "y") || (redo == "Y"))
@@ -149,5 +150,4 @@ int main(void)
             lcd.print("Invalid input");
             Serial.println("Invalid input");
         }
-    }
 }

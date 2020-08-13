@@ -11,8 +11,10 @@
 
 //  VARIABLES:
 
-extern char alphabets[],                                //Alphabets to choose from
-            vowels[];                                   //List of vowels
+extern const char *alphabets,                                //Alphabets to choose from
+            *vowels;                                   //List of vowels
+
+extern String confirmation, redo;
 
 
 extern uint8_t count;                                   //To count number of correct words.
@@ -20,19 +22,14 @@ extern uint8_t count;                                   //To count number of cor
 
 //  METHODS:
 
-uint8_t &getRandom();                                    //To generate a random number.
+bool  checkVowel(const char *str, const char *attributes);        //Checks str for attributes:
 
-bool  checkVowel(char *str, char *attributes);          //Checks str for attributes:
-
-inline bool confirm (String &confirm)                   //To check if the letter exists.
+void setup();
+void loop();
+bool isConfirm();
+inline bool confirm (String &confirm)                           //To check if the letter exists.
 {
   return ((confirm=="y")||(confirm=="Y"));
 }
-
-inline char generateLetter(uint8_t &random)              //To generate a random letter.
-{
-  return alphabets[random];
-}
-
 
 #endif
