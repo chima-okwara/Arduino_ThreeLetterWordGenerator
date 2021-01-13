@@ -21,7 +21,7 @@ String confirmation{},                                   //To confirm that word 
 
 char Word[4];                                        //To hold the three-letter word.
 
-LiquidCrystal lcd (14,15,16,17,18,19);                      //pins for the lcd screen
+LiquidCrystal lcd (7,8,9,10,11,12);                      //pins for the lcd screen
 
 void setup()
 {
