@@ -4,7 +4,7 @@
 #include <Wire.h>
 #include <string.h>
 
-LiquidCrystal lcd (14,15,16,17,18,19);                      //pins for the lcd screen
+LiquidCrystal lcd (7,8,9,10,11,12);                      //pins for the lcd screen
 
 String confirmation, redo;                                //To get feedback from user
 char firstLetter, secondLetter, thirdLetter;              //the three letters of the Word
