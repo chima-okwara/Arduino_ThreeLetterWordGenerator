@@ -38,4 +38,4 @@ Arduino_ThreeLetterWordGenerator:
 
 Important points to note:
 *This code is written for PlatformIO IDE.
-*To use it in ArduinoIDE, some adjustments may have to be made to the code, such as changing the file directory structure.
+*To use it in ArduinoIDE, some adjustments may have to be made to the code, suint8_t as changing the file directory structure.

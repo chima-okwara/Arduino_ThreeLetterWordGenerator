@@ -2,8 +2,6 @@
 ///Written by Chimaroke R. Okwara (AlphaChi)**************************************************
 ///Copyright (c) 03 Apr., 2020; The Eichen Group(TM)******************************************
 ///Tested on Arduino Uno. Written using PlatformIO********************************************
-///All rights reserved************************************************************************
-///All methods used are defined in /include/functions.h***************************************
 ///*******************************************************************************************
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // extern "C"
@@ -14,12 +12,13 @@
 #include <Arduino.h>
 #include <LiquidCrystal.h>
 #include <Wire.h>
+#include "../lib/xlwg.hpp"
 #include "functions.h"
 
 String confirmation{},                                   //To confirm that word exists
        redo{"y"};                                        //To continue generating words.
 
-char Word[4];                                        //To hold the three-letter word.
+char Word[4];                                            //To hold the three-letter word.
 
 LiquidCrystal lcd (7,8,9,10,11,12);                      //pins for the lcd screen
 
@@ -66,7 +65,7 @@ void loop()
           for (uint8_t i{}; i<3; ++i)          //Loop to generate the three letters of the word.
           {
               // uint8_t random = getRandom();
-              Word[i] = alphabets[rand()%26];;
+              Word[i] = alphabets[rand()%26];
               DELAY(100);
           }
 
