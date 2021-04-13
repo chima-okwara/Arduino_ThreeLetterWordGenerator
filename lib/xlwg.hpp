@@ -39,6 +39,8 @@ public:
 
   const char *getWord() const { return (word); }
 
+  const int getWordCount() const {return(correctWordCount); }
+
   const char *getWord(uint8_t index) const { return wordBin[index]; }
 };
 

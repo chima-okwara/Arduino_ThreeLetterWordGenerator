@@ -11,19 +11,26 @@
 #include <xlwg.hpp>
 #include "functions.h"
 
-String confirmation{},                                   //To confirm that word exists
-       redo{"y"};                                        //To continue generating words.
+void setup();
+void loop();
 
-char Word[4];                                            //To hold the three-letter word.
+bool confirm(uint8_t yes, uint8_t no);
+uint8_t yesButton = 15, noButton = 16;
 
-LiquidCrystal lcd (7,8,9,10,11,12);                      //pins for the lcd screen
-Generator gen(3);
+LiquidCrystal lcd (7,8,9,10,11,12);                      //pins for the lcd screen.
+Generator gen(3);                                        //Three-letter word generator.
+
+bool confirm(uint8_t yes, uint8_t no)
+{
+  return ( (digitalRead(yes) == HIGH) && (digitalRead(no) == LOW) ? true : false );)
+}
 
 void setup()
 {
     ///////*************BEGINNING OF SETUP ROUTINE*******************///////
-        //Prepares the serial monitor and the lcd screen
-
+        //Prepares the lcd screen
+    pinMode(yesButton, INPUT);
+    pinMode(noButton, INPUT);
     lcd.begin(16, 2);
     lcd.clear();
 
@@ -68,14 +75,10 @@ void loop()
         DELAY(500);
         lcd.setCursor(1,0);
         lcd.print("Word Exists? Y/N");
-        Serial.println("Word Exists? Y/N");
 
 
-        while(!isConfirm())
-          confirmation=Serial.readString();
-        if (confirm(confirmation))      //If the generated word exists...
+      if (confirm(yesButton, noButton))      //If the generated word exists...
         {
-            ++count;                    //...add it to the count of corrected words...
             lcd.setCursor(13, 1);       //...and print "Yes" to the LCD...
             lcd.print("Yes");
             lcd.clear();
@@ -87,7 +90,6 @@ void loop()
             lcd.setCursor(13, 1);       //...print "No" to the LCD...
             lcd.print("No");
             lcd.clear();
-            Serial.println("No");       //...and the serial monitor.
         }
 
         DELAY(500);
@@ -97,13 +99,10 @@ void loop()
         lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print("Continue? Y/N");
-        Serial.print("Continue? Y/N");
 
         DELAY(500);
-        redo=Serial.readString();
 
-
-        if ((redo == "n") || (redo == "N"))    //If user wants to stop generating words...
+        if (!confirm(yesButton, noButton))    //If user wants to stop generating words...
         {
             lcd.setCursor(0,1);
             lcd.print("No");
@@ -112,25 +111,16 @@ void loop()
             lcd.setCursor(0, 0);
             lcd.print("Correct words: ");//...print the total number of correct words to the LCD...
             lcd.setCursor(0, 1);
-            lcd.print(count);
+            lcd.print(gen.getWordCount());
             Serial.print("Total number of correct words: ");
-            Serial.print(count);              //...and serial monitor.
-            count=0;
-            // Serial.readString();        //*************To pause the game until enter is pressed
-        }
-
-        else if ((redo == "y") || (redo == "Y"))
-        {
-            lcd.setCursor(0,1);
-            lcd.print("Yes");
-            Serial.println("Yes");
-            DELAY(500);
+            Serial.print(gen.getWordCount());              //...and serial monitor.
         }
 
         else
         {
             lcd.setCursor(0,1);
-            lcd.print("Invalid input");
-            Serial.println("Invalid input");
+            lcd.print("Yes");
+            Serial.println("Yes");
+            DELAY(500);
         }
 }
