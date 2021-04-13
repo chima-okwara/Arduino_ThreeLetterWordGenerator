@@ -10,9 +10,9 @@
 // }
 
 #include <Arduino.h>
-#include <LiquidCrystal.h>
+#include <./NewliquidCrystal/LiquidCrystal.h>
 #include <Wire.h>
-#include "../lib/xlwg.hpp"
+#include "xlwg.hpp"
 #include "functions.h"
 
 String confirmation{},                                   //To confirm that word exists
@@ -27,10 +27,9 @@ void setup()
     ///////*************BEGINNING OF SETUP ROUTINE*******************///////
         //Prepares the serial monitor and the lcd screen
 
-    Serial.begin(9600);
     lcd.begin(16, 2);
     lcd.clear();
-    srand(2000U);
+    Generator gen(3);
 
     //print welcome message onto the lcd screen:
     lcd.setCursor(0, 0);
@@ -60,18 +59,9 @@ void loop()
         lcd.print("Word: ");
         Serial.print("Word: ");
 
-       do                                 //Generate new letters until at least one is a vowel
-        {
-          for (uint8_t i{}; i<3; ++i)          //Loop to generate the three letters of the word.
-          {
-              // uint8_t random = getRandom();
-              Word[i] = alphabets[rand()%26];
-              DELAY(100);
-          }
+       gen.generateWord();
+       gen.verifyWord();
 
-          Word[3] = '\0';
-
-        }  while (!checkVowel(Word, vowels));
 
 
         //To print the word Generated:

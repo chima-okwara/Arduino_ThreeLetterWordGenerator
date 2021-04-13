@@ -19,8 +19,8 @@ private:
 
 
   int correctWordCount;
-  std::vector<char*> wordBin;
-
+  std::vector<char*> wordBin;         //TODO: Reimplement using plain arrays for cross-platform
+                                      //compatibility
 
   char *generateLetter();
   bool checkVowel() const;
