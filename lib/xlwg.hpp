@@ -20,19 +20,18 @@ private:
   const int8_t letterCount;
   const static char *const alphabets;
   const static char vowels[7];
-  const char *word;                     //TODO: Reimplement using a smart pointer or a vector container.
+  char *word;                     //TODO: Reimplement using a smart pointer or a vector container.
   bool wordExists {false};
 
 
   int correctWordCount;
-  char *wordBin[BINLENGTH];
+  const char *wordBin[BINLENGTH];
 
-  char *generateLetter();
-  bool checkVowel() const;
+  char generateLetter(void);
 
 public:
   Generator(const uint8_t &xLetters);
-  const char *const getAlphabet(uint8_t index) const { return &(alphabets[index]); }
+  char getAlphabet(uint8_t index) { return *(alphabets+index); }
   void generateWord();
   void verifyWord(bool state);
   void storeWord();

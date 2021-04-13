@@ -21,17 +21,11 @@ Generator::Generator(const uint8_t &xLetters) :letterCount(xLetters)
   (this->word) = word;
 }
 
-bool Generator::checkVowel() const //Checks for vowel in word, returns false if none.
-{
-  bool status = (strpbrk(word, vowels) != NULL) ? (true) : (false);
-  return (status);
-}
 
-
-char Generator::*generateLetter(void)  //Generates a single letter from the alphabet
+char Generator::generateLetter(void)  //Generates a single letter from the alphabet
 {
   auto seed = time(nullptr);
-  srand(seed++);
+  srand(seed);
   uint8_t x = rand()%26+1;
   xlwg::delay(1);
   char letter = getAlphabet(x);
@@ -44,12 +38,12 @@ void Generator::generateWord(void)
   {
     for (int8_t i = 0; i<(letterCount-1); ++i)
     {
-      word+i = generateLetter();
+      *(word+i) = generateLetter();
       xlwg::delay(2);
     }
 
     word[letterCount-1] = '\0';
-  } while(!checkVowel());
+  } while(strpbrk(word, vowels) == NULL);
 }
 
 
@@ -58,7 +52,7 @@ void Generator::storeWord()
 {
   if(wordExists)
   {
-    wordBin.push_back(word);
+    wordBin[correctWordCount] = word;
     ++correctWordCount;
   }
 }

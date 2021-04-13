@@ -4,15 +4,11 @@
 ///Tested on Arduino Uno. Written using PlatformIO********************************************
 ///*******************************************************************************************
 ///////////////////////////////////////////////////////////////////////////////////////////////
-// extern "C"
-// {
-//   #include <functions.h>
-// }
 
 #include <Arduino.h>
 #include <./NewliquidCrystal/LiquidCrystal.h>
 #include <Wire.h>
-#include "xlwg.hpp"
+#include <xlwg.hpp>
 #include "functions.h"
 
 String confirmation{},                                   //To confirm that word exists
@@ -21,6 +17,7 @@ String confirmation{},                                   //To confirm that word 
 char Word[4];                                            //To hold the three-letter word.
 
 LiquidCrystal lcd (7,8,9,10,11,12);                      //pins for the lcd screen
+Generator gen(3);
 
 void setup()
 {
@@ -29,7 +26,6 @@ void setup()
 
     lcd.begin(16, 2);
     lcd.clear();
-    Generator gen(3);
 
     //print welcome message onto the lcd screen:
     lcd.setCursor(0, 0);
