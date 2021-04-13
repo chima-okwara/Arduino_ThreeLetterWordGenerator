@@ -1,9 +1,15 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//*FILE NAME:       xlwg.hpp
+//*FILE DESC:       Header files for xlwg library.
+//*FILE AUTHOR:     The Eichen Group
+//*CONTRIBUTORS:    Chimaroke Okwara
+//*LAST MODIFIED:   Tuesday, 13 April 2021 09:16
+////////////////////////////////////////////////////////////////////////////////////////////////////
 #ifndef GENERATOR_HPP
 #define GENERATOR_HPP
-#include <vector>
 #include <stdlib.h>
 #include "xlwgDefinitions.hpp"
-
+#define BINLENGTH 100                 //This value is to be changed as suits the application
 
 
 #define GENERATOR_HPP
@@ -19,8 +25,7 @@ private:
 
 
   int correctWordCount;
-  std::vector<char*> wordBin;         //TODO: Reimplement using plain arrays for cross-platform
-                                      //compatibility
+  char *wordBin[BINLENGTH];
 
   char *generateLetter();
   bool checkVowel() const;

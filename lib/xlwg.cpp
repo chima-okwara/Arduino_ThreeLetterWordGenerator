@@ -1,5 +1,11 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//*FILE NAME:       xlwg.cpp
+//*FILE DESC:       Source file for xlwg library.
+//*FILE AUTHOR:     The Eichen Group
+//*CONTRIBUTORS:    Chimaroke Okwara
+//*LAST MODIFIED:   Tuesday, 13 April 2021 09:16
+////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <time.h>
-#include <vector>
 #include <stdlib.h>
 #include <string.h>
 #include "xlwgDefinitions.hpp"
@@ -21,38 +27,29 @@ bool Generator::checkVowel() const //Checks for vowel in word, returns false if 
   return (status);
 }
 
-#include <iostream> //TODO: remove
 
 char Generator::*generateLetter(void)  //Generates a single letter from the alphabet
 {
-  std::cout << "entering generateLetter()" << '\n';   //TODO: remove
   auto seed = time(nullptr);
   srand(seed++);
   uint8_t x = rand()%26+1;
   xlwg::delay(1);
   char letter = getAlphabet(x);
-  std::cout << "leaving generateLetter()" << '\n';    //TODO: remove
   return (letter);
 }
 
 void Generator::generateWord(void)
 {
-  std::cout << "entering generateWord()" << '\n';   //TODO: remove
   do
   {
-    std::cout << "entering do while() loop" << '\n';    //TODO: remove
     for (int8_t i = 0; i<(letterCount-1); ++i)
     {
-      std::cout << "entering for() loop" << '\n';       //TODO: remove
       word+i = generateLetter();
       xlwg::delay(2);
     }
-    std::cout << "leaving for() loop" << '\n';      //TODO: remove
 
     word[letterCount-1] = '\0';
   } while(!checkVowel());
-  std::cout << "leaving do while() loop" << '\n';   //TODO: remove
-  std::cout << "leaving generateWord()" << '\n';    //TODO: remove
 }
 
 

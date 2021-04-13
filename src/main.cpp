@@ -59,15 +59,13 @@ void loop()
         lcd.print("Word: ");
         Serial.print("Word: ");
 
+      //Generate a word:
        gen.generateWord();
-       gen.verifyWord();
 
 
-
-        //To print the word Generated:
+        //Print the word generated to LCD screen:
         lcd.setCursor(6, 0);
-        lcd.print(Word);
-        Serial.println(Word);
+        lcd.print(gen.getWord());
 
 
         //To confirm whether the generated word exists.
