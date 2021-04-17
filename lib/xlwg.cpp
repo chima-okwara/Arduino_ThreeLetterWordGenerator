@@ -18,8 +18,7 @@ bool wordExists = false;
 
 Generator::Generator(const uint8_t &xLetters) :letterCount(xLetters)
 {
-  char word[letterCount+1] {};
-  (this->word) = word;
+
 }
 
 

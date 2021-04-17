@@ -9,6 +9,7 @@
 #ifndef GENERATOR_HPP
 #define GENERATOR_HPP
 #include <stdlib.h>
+#include <string.h>
 #include "xlwgDefinitions.hpp"
 #define BINLENGTH 100                 //This value is to be changed as suits the application
 
