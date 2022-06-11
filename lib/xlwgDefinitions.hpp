@@ -1,10 +1,10 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-//*FILE NAME:       xlwgDefinitions.hpp
-//*FILE DESC:       Definitions for xlwg library.
+//*FILE NAME:       xlwg.cpp
+//*FILE DESC:       Macro definitions for xlwg library.
 //*FILE VERSION:    0.70
 //*FILE AUTHOR:     The Eichen Group
 //*CONTRIBUTORS:    Chimaroke Okwara
-//*LAST MODIFIED:   Tuesday, 13 April 2021 09:16
+//*LAST MODIFIED:   Monday, 3 May 2021 10:27
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #ifndef GEN_DEFS
 #define GEN_DEFS
@@ -19,7 +19,6 @@
     #define U alphabets[4]
     #define Y alphabets[5]
 
-
 //Types:
     using int8_t = signed char;
     using uint = unsigned int;
@@ -32,7 +31,6 @@
 namespace xlwg
 {
   void delay(const ulong &sec);   //Delay for sec seconds
-  void mdelay(const ulong &msec);  //Delay for msec microseconds
 }
 
 

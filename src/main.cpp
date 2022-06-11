@@ -8,10 +8,11 @@
 #include <Arduino.h>
 #include <LiquidCrystal.h>
 #include <Wire.h>
+#include <pincontrol.hpp>
 #include "xlwg.hpp"
 #include "functions.hpp"
 
-uint8_t yesButton = 5, noButton = 6;                   //Connections for pushbuttons
+inputPin yesButton {5}, noButton {6};                   //Connections for pushbuttons
 
 LiquidCrystal lcd (7,8,9,10,11,12);                      //Pins for the lcd screen.
 Generator gen(3);                                        //Three-letter word generator.
@@ -20,8 +21,8 @@ void setup()
 {
   ///////*************BEGINNING OF SETUP ROUTINE*******************///////
   //Sets mode for pins 5 and 6
-  pinMode(yesButton, INPUT);
-  pinMode(noButton, INPUT);
+  yesButton.set();
+  noButton.set();
 
   //Prepares the lcd screen
   lcd.begin(16, 2);
@@ -72,7 +73,7 @@ void loop()
   if (confirm(yesButton, noButton, HIGH))      //If the generated word exists...
   {
       lcd.setCursor(13, 1);       //...print "Yes" to the LCD...
-      gen.verifyWord(HIGH); gen.storeWord();
+      gen.storeWord();
       lcd.print("Yes");
       lcd.clear();
   }
@@ -105,7 +106,7 @@ void loop()
       lcd.setCursor(0, 0);
       lcd.print("Correct words: ");//...print the total number of correct words to the LCD...
       lcd.setCursor(0, 1);
-      lcd.print(gen.getWordCount());
+      lcd.print(gen.getCorrectWordCount());
       while (1);
   }
 
