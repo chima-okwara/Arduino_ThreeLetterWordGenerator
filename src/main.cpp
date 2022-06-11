@@ -6,31 +6,31 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <Arduino.h>
-#include <./NewliquidCrystal/LiquidCrystal.h>
+#include <LiquidCrystal.h>
 #include <Wire.h>
 #include <xlwg.hpp>
-#include "functions.h"
+#include <pincontrol.hpp>
+// #include "functions.h"
 
 void setup();
 void loop();
 
-bool confirm(uint8_t yes, uint8_t no);
-uint8_t yesButton = 15, noButton = 16;
+bool confirm(inputPin &yes, inputPin &no);
+inputPin yesButton(15), noButton(16);
 
 LiquidCrystal lcd (7,8,9,10,11,12);                      //pins for the lcd screen.
 Generator gen(3);                                        //Three-letter word generator.
 
-bool confirm(uint8_t yes, uint8_t no)
+bool confirm(inputPin &yes, inputPin &no)
 {
-  return ( (digitalRead(yes) == HIGH) && (digitalRead(no) == LOW) ? true : false );)
+  return ( (yesButton.read() == HIGH) && (noButton.read() == LOW) ? true : false );
 }
 
 void setup()
 {
     ///////*************BEGINNING OF SETUP ROUTINE*******************///////
         //Prepares the lcd screen
-    pinMode(yesButton, INPUT);
-    pinMode(noButton, INPUT);
+    Serial.begin(9600);
     lcd.begin(16, 2);
     lcd.clear();
 
@@ -69,12 +69,14 @@ void loop()
         //Print the word generated to LCD screen:
         lcd.setCursor(6, 0);
         lcd.print(gen.getWord());
+        Serial.println(gen.getWord());
 
 
         //To confirm whether the generated word exists.
         DELAY(500);
         lcd.setCursor(1,0);
         lcd.print("Word Exists? Y/N");
+        Serial.println("Word Exists? Y/N");
 
 
       if (confirm(yesButton, noButton))      //If the generated word exists...
@@ -82,7 +84,8 @@ void loop()
             lcd.setCursor(13, 1);       //...and print "Yes" to the LCD...
             lcd.print("Yes");
             lcd.clear();
-            Serial.println("Yes");      //...and the Serial monitor.
+            Serial.println("Yes");      //...and the Serial monitor...
+            gen.storeWord();            //...then store the word.
         }
 
         else                            //If the word doesn't exist...
@@ -90,6 +93,7 @@ void loop()
             lcd.setCursor(13, 1);       //...print "No" to the LCD...
             lcd.print("No");
             lcd.clear();
+            Serial.println("No");
         }
 
         DELAY(500);
@@ -99,6 +103,7 @@ void loop()
         lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print("Continue? Y/N");
+        Serial.println("Continue? Y/N");
 
         DELAY(500);
 
@@ -106,6 +111,7 @@ void loop()
         {
             lcd.setCursor(0,1);
             lcd.print("No");
+            Serial.println("No");
             DELAY(500);
             lcd.clear();
             lcd.setCursor(0, 0);
@@ -113,7 +119,10 @@ void loop()
             lcd.setCursor(0, 1);
             lcd.print(gen.getWordCount());
             Serial.print("Total number of correct words: ");
-            Serial.print(gen.getWordCount());              //...and serial monitor.
+            Serial.println(gen.getWordCount());              //...and serial monitor.
+            Serial.println("List of Correct words: ");
+            for(int i = 0; i>gen.getWordCount(); ++i)
+              Serial.println(gen.getWord(i));
         }
 
         else
