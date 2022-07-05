@@ -1,6 +1,6 @@
 ///************ Arduino-based three-letter Word generator*****************************/////////
 ///Written by Chimaroke R. Okwara**************************************************
-///Makes use of xlwg library version 0.70 by The Eichen Group
+///Makes use of xlwg library version 1.0 by The Eichen Group
 ///Tested on Arduino Uno. Written using PlatformIO********************************************
 ///*******************************************************************************************
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,32 +83,45 @@ void loop()
       lcd.setCursor(13, 1);       //...print "No" to the LCD...
       lcd.print("No");
       lcd.clear();
-      while(1)
-        ;
   }
 
   delay(500);
 
 
-  //Whether to continue generating words or not:
+  //Confirm whether to continue generating words or not:
   lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print("Continue? Y/N");
 
   delay(500);
 
-  if (!confirm(yesButton, noButton, LOW))    //If user wants to stop generating words...
+  if (!confirm(yesButton, noButton, HIGH))    //If user wants to stop generating words...
   {
-      lcd.setCursor(0,1);
+      lcd.setCursor(0, 1);
       lcd.print("No");
       delay(500);
       lcd.clear();
       lcd.setCursor(0, 0);
-      lcd.print("Correct words: ");//...print the total number of correct words to the LCD...
+      lcd.print("Correct words: ");
       lcd.setCursor(0, 1);
       lcd.print(gen.getCorrectWordCount());
+      lcd.clear();
+
+      for(uint i = 0; i < gen.getCorrectWordCount(); ++i)    //Loop to print each word in turn
+      {
+        lcd.setCursor(0, 0);
+        lcd.print(i+1);
+        lcd.print(". ");
+        lcd.print(gen.getWord(i));
+        lcd.setCursor(0, 1);
+        lcd.print(i+2);
+        lcd.print(". ");
+        lcd.print(gen.getWord(i));
+        lcd.clear();
+        delay(1000);
+      }
       while (1);
-  }
+  }                                           //...print the total number of correct words to the LCD, clear the screen, and remain frozen.
 
   else
   {
