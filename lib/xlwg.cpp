@@ -1,65 +1,72 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //*FILE NAME:       xlwg.cpp
 //*FILE DESC:       Source file for xlwg library.
+//*FILE VERSION:    0.70.1
 //*FILE AUTHOR:     The Eichen Group
 //*CONTRIBUTORS:    Chimaroke Okwara
-//*LAST MODIFIED:   Tuesday, 13 April 2021 09:16
+//*LAST MODIFIED:   Saturday, 11 June 2022 15:09
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#include <time.h>
 #include <stdlib.h>
+#include <stdint.h>
+#include <time.h>
 #include <string.h>
 #include "xlwgDefinitions.hpp"
 #include "xlwg.hpp"
 
-const char *const Generator:: alphabets = "aeiouybcdfghjklmnpqrstvwxz";
+
+const char *const Generator:: alphabets = "aeiouybcdfghjklmnpqrstvwxza";
 const char Generator::vowels[7] = {A, E, I, O, U, Y ,'\0'};
 bool wordExists = false;
 
-Generator::Generator(const uint8_t &xLetters) :letterCount(xLetters)
+
+Generator::Generator(const uint8_t &xLetters) :wordArraySize(xLetters+1)
 {
-  char word[letterCount+1] {};
-  (this->word) = word;
+  //Allocate memory for the word and the wordBin:
+  word = new char[wordArraySize];
+  for(int i = 0; i<BINLENGTH; ++i)
+    wordBin[i] = new char[wordArraySize];
+
+  //initialise the random number generator seed:
+  auto seed = time(nullptr);
+  srand(seed++);
 }
 
-
-char Generator::generateLetter(void)  //Generates a single letter from the alphabet
+Generator::~Generator()
 {
-  auto seed = time(nullptr);
-  srand(seed);
-  uint8_t x = rand()%26+1;
-  xlwg::delay(1);
-  char letter = getAlphabet(x);
-  return (letter);
+  delete[] word;
+  for(int i = 0; i<BINLENGTH; ++i)
+    delete[] wordBin[i];
+}
+
+inline bool Generator::checkVowel() const        //Checks for vowel in word, returns false if none.
+{
+  return(strpbrk(word, vowels) != NULL) ? (true) : (false);
+}
+
+char Generator::generateLetter(void) const //Generates a single letter from the alphabet
+{
+  uint8_t index = rand()%26;              //Generates random number between 0 and 26
+  return (getAlphabet(index));
 }
 
 void Generator::generateWord(void)
 {
   do
   {
-    for (int8_t i = 0; i<(letterCount-1); ++i)
+    for (int8_t i = 0; i<(wordArraySize-1); ++i)
     {
-      *(word+i) = generateLetter();
-      xlwg::delay(2);
+      word[i] = generateLetter();
     }
 
-    word[letterCount-1] = '\0';
-  } while(strpbrk(word, vowels) == NULL);
+    word[wordArraySize-1] = '\0';
+  } while(!checkVowel());
 }
-
 
 
 void Generator::storeWord()
 {
-  if(wordExists)
-  {
-    wordBin[correctWordCount] = word;
-    ++correctWordCount;
-  }
-}
-
-void Generator::verifyWord(bool state)
-{
-  wordExists = ( (state == true) ? true : false );
+  strcpy(wordBin[correctWordCount], word);
+  ++correctWordCount;
 }
 
 
@@ -67,10 +74,4 @@ void xlwg::delay(const ulong &sec)
 {
     time_t wait = time(nullptr) + sec;
     while (time(nullptr) < wait);
-}
-
-
-void xlwg::mdelay(const ulong &msec)    //TODO: Implement using a microsecond function from time.h
-{
-
 }

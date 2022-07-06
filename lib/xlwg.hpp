@@ -1,47 +1,49 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-//*FILE NAME:       xlwg.hpp
-//*FILE DESC:       Header files for xlwg library.
+//*FILE NAME:       xlwg.cpp
+//*FILE DESC:       Header file for xlwg library.
+//*FILE VERSION:    0.70.1
 //*FILE AUTHOR:     The Eichen Group
 //*CONTRIBUTORS:    Chimaroke Okwara
-//*LAST MODIFIED:   Tuesday, 13 April 2021 09:16
+//*LAST MODIFIED:   Saturday, 11 June 2022 15:09
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #ifndef GENERATOR_HPP
 #define GENERATOR_HPP
-#include <stdlib.h>
+#define BINLENGTH 100
+
+#include <stdint.h>
+#include <string.h>
 #include "xlwgDefinitions.hpp"
-#define BINLENGTH 100                 //This value is to be changed as suits the application
-
-
-#define GENERATOR_HPP
 
 class Generator
 {
 private:
-  const int8_t letterCount;
+  //Variables:
+  const uint8_t wordArraySize;
   const static char *const alphabets;
   const static char vowels[7];
-  char *word;                     //TODO: Reimplement using a smart pointer or a vector container.
-  bool wordExists {false};
+  char *word { };
+  bool wordExists { };
+  size_t correctWordCount { };
+  char *wordBin[BINLENGTH] { };
 
-
-  int correctWordCount;
-  const char *wordBin[BINLENGTH];
-
-  char generateLetter(void);
+  //Methods:
+  inline bool checkVowel() const;
+  char generateLetter() const;
+  char getAlphabet(const uint8_t &index) const { return (alphabets[index]); }
 
 public:
+  //Constructor(s) and Destructor(s):
   Generator(const uint8_t &xLetters);
-  char getAlphabet(uint8_t index) { return *(alphabets+index); }
+  Generator() = default;
+  ~Generator();
+
   void generateWord();
-  void verifyWord(bool state);
   void storeWord();
 
-
-  const char *getWord() const { return (word); }
-
-  const int getWordCount() const {return(correctWordCount); }
-
-  const char *getWord(uint8_t index) const { return wordBin[index]; }
+  //Accessor Mathods:
+  const size_t &getCorrectWordCount(void) const { return (correctWordCount); }
+  char *getWord() const { return (word); }
+  char *getWord(const size_t &index) const { return wordBin[index]; }
 };
 
 

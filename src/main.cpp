@@ -14,17 +14,12 @@
 
 void setup();
 void loop();
-
 bool confirm(inputPin &yes, inputPin &no);
+
 inputPin yesButton(15), noButton(16);
 
 LiquidCrystal lcd (7,8,9,10,11,12);                      //pins for the lcd screen.
 Generator gen(3);                                        //Three-letter word generator.
-
-bool confirm(inputPin &yes, inputPin &no)
-{
-  return ( (yesButton.read() == HIGH) && (noButton.read() == LOW) ? true : false );
-}
 
 void setup()
 {
@@ -117,11 +112,11 @@ void loop()
             lcd.setCursor(0, 0);
             lcd.print("Correct words: ");//...print the total number of correct words to the LCD...
             lcd.setCursor(0, 1);
-            lcd.print(gen.getWordCount());
+            lcd.print(gen.getCorrectWordCount());
             Serial.print("Total number of correct words: ");
-            Serial.println(gen.getWordCount());              //...and serial monitor.
+            Serial.println(gen.getCorrectWordCount());              //...and serial monitor.
             Serial.println("List of Correct words: ");
-            for(int i = 0; i>gen.getWordCount(); ++i)
+            for(uint i = 0; i>gen.getCorrectWordCount(); ++i)
               Serial.println(gen.getWord(i));
         }
 
@@ -132,4 +127,11 @@ void loop()
             Serial.println("Yes");
             DELAY(500);
         }
+}
+
+bool confirm(inputPin &yes, inputPin &no)
+{
+  while((yes.read() == LOW) && (no.read() == LOW))
+    ;
+  return ( (yes.read() == HIGH) && (no.read() == LOW) ? true : false );
 }

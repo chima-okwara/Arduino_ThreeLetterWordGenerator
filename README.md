@@ -28,7 +28,7 @@ An arduino project to generate random three-letter words and display them on a 1
 #Directory structure:
 Arduino_ThreeLetterWordGenerator:
 
-/include/functions.h        **This contains the header file with all function definitions.**
+/lib/xlwg/                  **This directory contains the xlwg library, adapted to work with Arduino**
 
 /src/main.cpp               **This contains the main source file with the setup() and loop() Arduino functions**
 
