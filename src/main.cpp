@@ -16,7 +16,7 @@ void setup();
 void loop();
 bool confirm(inputPin &yes, inputPin &no);
 
-inputPin yesButton(15), noButton(16);
+inputPin yesButton(2), noButton(3);
 
 LiquidCrystal lcd (7,8,9,10,11,12);                      //pins for the lcd screen.
 Generator gen(3);                                        //Three-letter word generator.
@@ -25,7 +25,6 @@ void setup()
 {
     ///////*************BEGINNING OF SETUP ROUTINE*******************///////
         //Prepares the lcd screen
-    Serial.begin(9600);
     lcd.begin(16, 2);
     lcd.clear();
 
@@ -36,7 +35,7 @@ void setup()
     lcd.setCursor(0, 1);
     lcd.print("Three Letter Word Generator");
     DELAY(500);
-    Serial.println("Done");
+    yesButton.write(1); noButton.write(1);
 
     for (size_t i=0; i<11; ++i)  //To scroll the second part of the welcome message.
     {
@@ -52,43 +51,43 @@ void setup()
 
 void loop()
 {
-        DELAY(200);
+        lcd.clear();
+        DELAY(250);
         lcd.setCursor(0, 0);
-        lcd.print("Word: ");
-        Serial.print("Word: ");
 
       //Generate a word:
        gen.generateWord();
 
 
         //Print the word generated to LCD screen:
-        lcd.setCursor(6, 0);
+        lcd.setCursor(0, 0);
         lcd.print(gen.getWord());
-        Serial.println(gen.getWord());
-
 
         //To confirm whether the generated word exists.
         DELAY(500);
-        lcd.setCursor(1,0);
+        lcd.setCursor(0,1);
         lcd.print("Word Exists? Y/N");
-        Serial.println("Word Exists? Y/N");
-
 
       if (confirm(yesButton, noButton))      //If the generated word exists...
         {
-            lcd.setCursor(13, 1);       //...and print "Yes" to the LCD...
-            lcd.print("Yes");
             lcd.clear();
-            Serial.println("Yes");      //...and the Serial monitor...
+            lcd.setCursor(0, 0);       //...and print "Yes" to the LCD...
+            lcd.print("Yes");
+            DELAY(700);
+            lcd.clear();
             gen.storeWord();            //...then store the word.
+            lcd.clear();
+            DELAY(250);
         }
 
         else                            //If the word doesn't exist...
         {
-            lcd.setCursor(13, 1);       //...print "No" to the LCD...
-            lcd.print("No");
             lcd.clear();
-            Serial.println("No");
+            lcd.setCursor(0, 0);       //...print "No" to the LCD...
+            lcd.print("No");
+            DELAY(700);
+            lcd.clear();
+            DELAY(250);
         }
 
         DELAY(500);
@@ -96,9 +95,9 @@ void loop()
 
         //Whether to continue generating words or not:
         lcd.clear();
+        DELAY(250);
         lcd.setCursor(0, 0);
         lcd.print("Continue? Y/N");
-        Serial.println("Continue? Y/N");
 
         DELAY(500);
 
@@ -106,32 +105,30 @@ void loop()
         {
             lcd.setCursor(0,1);
             lcd.print("No");
-            Serial.println("No");
-            DELAY(500);
+            DELAY(700);
             lcd.clear();
+            DELAY(250);
             lcd.setCursor(0, 0);
             lcd.print("Correct words: ");//...print the total number of correct words to the LCD...
             lcd.setCursor(0, 1);
             lcd.print(gen.getCorrectWordCount());
-            Serial.print("Total number of correct words: ");
-            Serial.println(gen.getCorrectWordCount());              //...and serial monitor.
-            Serial.println("List of Correct words: ");
             for(uint i = 0; i>gen.getCorrectWordCount(); ++i)
-              Serial.println(gen.getWord(i));
+            {
+              //TODO: Add function to print each word one after the other
+            }
         }
 
         else
         {
             lcd.setCursor(0,1);
             lcd.print("Yes");
-            Serial.println("Yes");
-            DELAY(500);
+            DELAY(700);
         }
 }
 
 bool confirm(inputPin &yes, inputPin &no)
 {
-  while((yes.read() == LOW) && (no.read() == LOW))
+  while((yes.read() == 1) && (no.read() == 1))
     ;
-  return ( (yes.read() == HIGH) && (no.read() == LOW) ? true : false );
+  return ( (yes.read() == LOW) && (no.read() == 1) ? true : false );
 }
