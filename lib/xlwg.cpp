@@ -4,7 +4,7 @@
 //*FILE VERSION:    0.70.1
 //*FILE AUTHOR:     The Eichen Group
 //*CONTRIBUTORS:    Chimaroke Okwara
-//*LAST MODIFIED:   Monday, 3 May 2021 10:27
+//*LAST MODIFIED:   Saturday, 11 June 2022 15:09
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <stdlib.h>
 #include <stdint.h>
@@ -21,7 +21,7 @@ bool wordExists = false;
 
 Generator::Generator(const uint8_t &xLetters) :wordArraySize(xLetters+1)
 {
-  //Allocate memory for the word and the wordBin:
+  //Allocate memory for the word and the wordBin on the heap:
   word = new char[wordArraySize];
   for(int i = 0; i<BINLENGTH; ++i)
     wordBin[i] = new char[wordArraySize];

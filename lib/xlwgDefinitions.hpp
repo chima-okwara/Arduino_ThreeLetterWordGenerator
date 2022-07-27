@@ -4,12 +4,13 @@
 //*FILE VERSION:    0.70
 //*FILE AUTHOR:     The Eichen Group
 //*CONTRIBUTORS:    Chimaroke Okwara
-//*LAST MODIFIED:   Monday, 3 May 2021 10:27
+//*LAST MODIFIED:   Saturday, 11 June 2022 16.12
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #ifndef GEN_DEFS
 #define GEN_DEFS
 
 #include <time.h>
+#include <stdint.h>
 
 //Variables:
     #define A alphabets[0]
@@ -20,11 +21,9 @@
     #define Y alphabets[5]
 
 //Types:
-    using int8_t = signed char;
     using uint = unsigned int;
-    using uint8_t = unsigned char;
     using ulong = unsigned long;
-    using uchar = uint8_t;
+    using uchar = unsigned char;
 
 
 //Methods:
