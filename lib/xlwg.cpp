@@ -21,7 +21,7 @@ bool wordExists = false;
 
 Generator::Generator(const uint8_t &xLetters) :wordArraySize(xLetters+1)
 {
-  //Allocate memory for the word and the wordBin:
+  //Allocate memory for the word and the wordBin on the heap:
   word = new char[wordArraySize];
   for(int i = 0; i<BINLENGTH; ++i)
     wordBin[i] = new char[wordArraySize];
